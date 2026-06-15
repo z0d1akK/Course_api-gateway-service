@@ -1,5 +1,6 @@
-package com.innowise.apigateway.filter;
+package com.innowise.apigateway.security.filter;
 
+import com.innowise.apigateway.common.constants.Headers;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -16,9 +17,9 @@ public class ForwardedHeadersFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
 
         ServerHttpRequest mutatedRequest = request.mutate()
-                .header("X-Forwarded-Host", request.getURI().getHost())
-                .header("X-Forwarded-Port", String.valueOf(request.getURI().getPort()))
-                .header("X-Forwarded-Proto", request.getURI().getScheme())
+                .header(Headers.FORWARDED_HOST, request.getURI().getHost())
+                .header(Headers.FORWARDED_PORT, String.valueOf(request.getURI().getPort()))
+                .header(Headers.FORWARDED_PROTO, request.getURI().getScheme())
                 .build();
 
         return chain.filter(exchange.mutate().request(mutatedRequest).build());

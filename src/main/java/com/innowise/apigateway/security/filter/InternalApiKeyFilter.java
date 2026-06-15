@@ -1,5 +1,6 @@
-package com.innowise.apigateway.filter;
+package com.innowise.apigateway.security.filter;
 
+import com.innowise.apigateway.common.constants.Headers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -22,7 +23,7 @@ public class InternalApiKeyFilter extends AbstractGatewayFilterFactory<Object> {
 
             if (request.getURI().getPath().startsWith("/internal/")) {
                 ServerHttpRequest mutatedRequest = request.mutate()
-                        .header("X-Internal-Key", internalApiKey)
+                        .header(Headers.INTERNAL_KEY, internalApiKey)
                         .build();
                 return chain.filter(exchange.mutate().request(mutatedRequest).build());
             }

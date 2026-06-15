@@ -1,12 +1,12 @@
 package com.innowise.apigateway.config;
 
+import com.innowise.apigateway.common.constants.Headers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -14,6 +14,7 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration corsConfig = new CorsConfiguration();
 
         corsConfig.setAllowedOrigins(List.of(
@@ -23,33 +24,26 @@ public class CorsConfig {
                 "http://localhost:8083"
         ));
 
-        corsConfig.setAllowedMethods(Arrays.asList(
-                "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
+        corsConfig.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS"
         ));
 
-        corsConfig.setAllowedHeaders(Arrays.asList(
-                "Authorization",
+        corsConfig.setAllowedHeaders(List.of(
+                Headers.AUTHORIZATION,
                 "Content-Type",
-                "X-Internal-Key",
-                "X-Requested-With",
-                "Accept",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers",
-                "X-Forwarded-Host",
-                "X-Forwarded-Proto",
-                "X-Forwarded-Port"
-        ));
-
-        corsConfig.setExposedHeaders(List.of(
-                "Authorization",
-                "X-Internal-Key"
+                "Accept"
         ));
 
         corsConfig.setAllowCredentials(true);
         corsConfig.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
         source.registerCorsConfiguration("/**", corsConfig);
 
         return source;

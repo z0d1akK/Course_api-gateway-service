@@ -1,4 +1,4 @@
-package com.innowise.apigateway.common.constants;
+package com.innowise.apigateway.common.constants.messages;
 
 import lombok.experimental.UtilityClass;
 
@@ -12,8 +12,6 @@ public class ErrorMessages {
     public static final String AUTHORIZATION_HEADER_MISSING = "Authorization header is missing";
 
     public static final String AUTHORIZATION_HEADER_INVALID = "Authorization header format is invalid";
-
-    public static final String USER_CREATION_FAILED = "Failed to create user";
 
     public static final String CREDENTIALS_CREATION_FAILED = "Failed to create user credentials";
 

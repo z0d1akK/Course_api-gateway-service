@@ -1,4 +1,4 @@
-package com.innowise.apigateway.config;
+package com.innowise.apigateway.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
