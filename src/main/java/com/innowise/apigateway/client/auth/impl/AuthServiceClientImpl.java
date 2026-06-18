@@ -11,6 +11,7 @@ import com.innowise.apigateway.client.auth.dto.response.AuthCredentialResponseDt
 import com.innowise.apigateway.client.auth.dto.response.TokenResponseDto;
 import com.innowise.apigateway.client.auth.dto.response.TokenValidationResponseDto;
 import com.innowise.apigateway.common.constants.paths.ApiPaths;
+import com.innowise.apigateway.common.constants.paths.SecurityPaths;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -34,7 +35,7 @@ public class AuthServiceClientImpl extends BaseWebClient implements AuthServiceC
         return withConnectionErrorHandling(
                 authWebClient
                         .post()
-                        .uri(ApiPaths.INTERNAL_CREDENTIALS)
+                        .uri(SecurityPaths.INTERNAL_CREDENTIALS)
                         .bodyValue(request)
                         .exchangeToMono(response -> handleResponse(response, AuthCredentialResponseDto.class))
         );
@@ -67,7 +68,7 @@ public class AuthServiceClientImpl extends BaseWebClient implements AuthServiceC
         return withConnectionErrorHandling(
                 authWebClient
                         .post()
-                        .uri(ApiPaths.INTERNAL_VALIDATE)
+                        .uri(SecurityPaths.INTERNAL_VALIDATE)
                         .bodyValue(request)
                         .exchangeToMono(response -> handleResponse(response, TokenValidationResponseDto.class))
         );

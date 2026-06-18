@@ -5,7 +5,7 @@ import com.innowise.apigateway.client.BaseWebClient;
 import com.innowise.apigateway.client.user.UserServiceClient;
 import com.innowise.apigateway.client.user.dto.request.CreateUserRequestDto;
 import com.innowise.apigateway.client.user.dto.response.UserResponseDto;
-import com.innowise.apigateway.common.constants.paths.ApiPaths;
+import com.innowise.apigateway.common.constants.paths.SecurityPaths;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -31,7 +31,7 @@ public class UserServiceClientImpl extends BaseWebClient implements UserServiceC
         return withConnectionErrorHandling(
                 userWebClient
                         .post()
-                        .uri(ApiPaths.INTERNAL_USERS)
+                        .uri(SecurityPaths.INTERNAL_USERS)
                         .bodyValue(request)
                         .exchangeToMono(response -> handleResponse(response, UserResponseDto.class))
         );
@@ -42,7 +42,7 @@ public class UserServiceClientImpl extends BaseWebClient implements UserServiceC
         return withConnectionErrorHandling(
                 userWebClient
                         .delete()
-                        .uri(ApiPaths.INTERNAL_USERS_WITH_ID + userId)
+                        .uri(SecurityPaths.INTERNAL_USERS_WITH_ID + userId)
                         .exchangeToMono(this::handleVoidResponse)
         );
     }

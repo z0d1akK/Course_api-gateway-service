@@ -5,13 +5,15 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SecurityPaths {
 
-    public static final String LOGIN = "/api/auth/token";
-
-    public static final String REFRESH = "/api/auth/refresh";
-
-    public static final String REGISTER = "/api/register";
-
     public static final String INTERNAL = "/internal";
+
+    public static final String INTERNAL_USERS = "/internal/users";
+
+    public static final String INTERNAL_USERS_WITH_ID = "/internal/users/";
+
+    public static final String INTERNAL_VALIDATE = "/internal/auth/validate";
+
+    public static final String INTERNAL_CREDENTIALS = "/internal/auth/credentials";
 
     public static final String SWAGGER = "/swagger-ui";
 

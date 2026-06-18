@@ -6,6 +6,7 @@ import com.innowise.apigateway.client.auth.dto.response.TokenValidationResponseD
 import com.innowise.apigateway.common.constants.Headers;
 import com.innowise.apigateway.common.constants.SecurityConstants;
 import com.innowise.apigateway.common.constants.messages.ErrorMessages;
+import com.innowise.apigateway.common.constants.paths.ApiPaths;
 import com.innowise.apigateway.common.constants.paths.SecurityPaths;
 import com.innowise.apigateway.common.exception.ServiceCommunicationException;
 import com.innowise.apigateway.common.exception.UnauthorizedException;
@@ -14,6 +15,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -30,7 +32,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        if (isPublicPath(path) || isInternalPath(path)) {
+        if (isPublicPath(exchange.getRequest()) || isInternalPath(path)) {
             return chain.filter(exchange);
         }
 
@@ -76,14 +78,19 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
                 .build();
     }
 
-    private boolean isPublicPath(String path) {
-        return path.equals(SecurityPaths.LOGIN)
-                || path.equals(SecurityPaths.REFRESH)
-                || path.equals(SecurityPaths.REGISTER)
+    private boolean isPublicPath(ServerHttpRequest request) {
+
+        String path = request.getURI().getPath();
+
+        return path.equals(ApiPaths.LOGIN)
+                || path.equals(ApiPaths.REFRESH)
+                || path.equals(ApiPaths.REGISTER)
+                || (request.getMethod() == HttpMethod.GET && path.equals(ApiPaths.ITEMS))
+                || (request.getMethod() == HttpMethod.GET && path.startsWith(ApiPaths.ITEMS_BY_ID))
                 || path.startsWith(SecurityPaths.SWAGGER)
                 || path.startsWith(SecurityPaths.API_DOCS)
-                || path.startsWith(SecurityPaths.USER_DOCS_PREFIX)
                 || path.startsWith(SecurityPaths.AUTH_DOCS_PREFIX)
+                || path.startsWith(SecurityPaths.USER_DOCS_PREFIX)
                 || path.startsWith(SecurityPaths.ORDER_DOCS_PREFIX);
     }
 
