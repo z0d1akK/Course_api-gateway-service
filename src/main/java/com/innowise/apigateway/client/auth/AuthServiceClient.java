@@ -1,7 +1,6 @@
 package com.innowise.apigateway.client.auth;
 
 import com.innowise.apigateway.client.auth.dto.request.LoginRequestDto;
-import com.innowise.apigateway.client.auth.dto.request.RefreshTokenRequestDto;
 import com.innowise.apigateway.client.auth.dto.request.RegisterCredentialsRequestDto;
 import com.innowise.apigateway.client.auth.dto.request.ValidateTokenRequestDto;
 import com.innowise.apigateway.client.auth.dto.response.AuthCredentialResponseDto;
@@ -26,14 +25,6 @@ public interface AuthServiceClient {
      * @return response containing access and refresh tokens
      */
     Mono<TokenResponseDto> login(LoginRequestDto request);
-
-    /**
-     * Refreshes expired access token using valid refresh token.
-     *
-     * @param request request object containing refresh token
-     * @return response containing new access and refresh tokens
-     */
-    Mono<TokenResponseDto> refresh(RefreshTokenRequestDto request);
 
     /**
      * Validates provided access token and returns its metadata.

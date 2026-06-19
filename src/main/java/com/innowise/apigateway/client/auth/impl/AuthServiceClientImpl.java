@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.innowise.apigateway.client.BaseWebClient;
 import com.innowise.apigateway.client.auth.AuthServiceClient;
 import com.innowise.apigateway.client.auth.dto.request.LoginRequestDto;
-import com.innowise.apigateway.client.auth.dto.request.RefreshTokenRequestDto;
 import com.innowise.apigateway.client.auth.dto.request.RegisterCredentialsRequestDto;
 import com.innowise.apigateway.client.auth.dto.request.ValidateTokenRequestDto;
 import com.innowise.apigateway.client.auth.dto.response.AuthCredentialResponseDto;
@@ -47,17 +46,6 @@ public class AuthServiceClientImpl extends BaseWebClient implements AuthServiceC
                 authWebClient
                         .post()
                         .uri(ApiPaths.LOGIN)
-                        .bodyValue(request)
-                        .exchangeToMono(response -> handleResponse(response, TokenResponseDto.class))
-        );
-    }
-
-    @Override
-    public Mono<TokenResponseDto> refresh(RefreshTokenRequestDto request) {
-        return withConnectionErrorHandling(
-                authWebClient
-                        .post()
-                        .uri(ApiPaths.REFRESH)
                         .bodyValue(request)
                         .exchangeToMono(response -> handleResponse(response, TokenResponseDto.class))
         );
