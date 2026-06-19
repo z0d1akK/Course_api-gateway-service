@@ -1,5 +1,6 @@
 package com.innowise.apigateway.config;
 
+import com.innowise.apigateway.common.constants.Headers;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,18 +25,18 @@ public class WebClientConfig {
     @Bean
     @Qualifier("authWebClient")
     public WebClient authWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(authUrl).defaultHeader("X-Internal-Key", internalApiKey).build();
+        return builder.baseUrl(authUrl).defaultHeader(Headers.INTERNAL_KEY, internalApiKey).build();
     }
 
     @Bean
     @Qualifier("userWebClient")
     public WebClient userWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(userUrl).defaultHeader("X-Internal-Key", internalApiKey).build();
+        return builder.baseUrl(userUrl).defaultHeader(Headers.INTERNAL_KEY, internalApiKey).build();
     }
 
     @Bean
     @Qualifier("orderWebClient")
     public WebClient orderWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(orderUrl).defaultHeader("X-Internal-Key", internalApiKey).build();
+        return builder.baseUrl(orderUrl).defaultHeader(Headers.INTERNAL_KEY, internalApiKey).build();
     }
 }
