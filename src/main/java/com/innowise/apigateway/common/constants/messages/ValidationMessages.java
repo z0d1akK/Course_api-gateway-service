@@ -20,7 +20,4 @@ public class ValidationMessages {
 
     public static final String USER_PASSWORD_REQUIRED = "Password is required";
     public static final String USER_PASSWORD_SIZE = "Password must be less than 255 characters";
-
-    public static final String TOKEN_REQUIRED = "Token is required";
-    public static final String REFRESH_TOKEN_REQUIRED = "Refresh token is required";
 }
