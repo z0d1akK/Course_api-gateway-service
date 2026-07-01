@@ -19,9 +19,6 @@ public class WebClientConfig {
     @Value("${services.user.url}")
     private String userUrl;
 
-    @Value("${services.order.url}")
-    private String orderUrl;
-
     @Bean
     @Qualifier("authWebClient")
     public WebClient authWebClient(WebClient.Builder builder) {
@@ -32,11 +29,5 @@ public class WebClientConfig {
     @Qualifier("userWebClient")
     public WebClient userWebClient(WebClient.Builder builder) {
         return builder.baseUrl(userUrl).defaultHeader(Headers.INTERNAL_KEY, internalApiKey).build();
-    }
-
-    @Bean
-    @Qualifier("orderWebClient")
-    public WebClient orderWebClient(WebClient.Builder builder) {
-        return builder.baseUrl(orderUrl).defaultHeader(Headers.INTERNAL_KEY, internalApiKey).build();
     }
 }

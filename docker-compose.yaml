@@ -20,6 +20,7 @@ services:
       AUTH_SERVICE_DOCKER_URL: ${AUTH_SERVICE_DOCKER_URL}
       USER_SERVICE_DOCKER_URL: ${USER_SERVICE_DOCKER_URL}
       ORDER_SERVICE_DOCKER_URL: ${ORDER_SERVICE_DOCKER_URL}
+      PAYMENT_SERVICE_DOCKER_URL: ${PAYMENT_SERVICE_DOCKER_URL}
 
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:${SERVER_PORT}/api-docs || exit 1"]
@@ -28,10 +29,57 @@ services:
       retries: 3
       start_period: 60s
 
+    depends_on:
+      kafka:
+        condition: service_healthy
+
     networks:
       - user-service-network
       - auth-service-network
       - order-service-network
+      - payment-service-network
+      - kafka-network
+
+  kafka:
+    image: apache/kafka:4.3.1
+
+    container_name: shared-kafka
+
+    restart: unless-stopped
+
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:${KAFKA_PORT},EXTERNAL://localhost:${KAFKA_HOST_PORT}
+      KAFKA_LISTENERS: CONTROLLER://kafka:${KAFKA_CONTROLLER_PORT},INTERNAL://kafka:${KAFKA_PORT},EXTERNAL://0.0.0.0:${KAFKA_HOST_PORT}
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:${KAFKA_CONTROLLER_PORT}
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+    ports:
+      - "${KAFKA_HOST_PORT}:${KAFKA_HOST_PORT}"
+
+    healthcheck:
+      test: [ "CMD-SHELL", "ps aux | grep -v grep | grep kafka || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+    networks:
+      - kafka-network
+
+volumes:
+  kafka-data:
 
 networks:
   user-service-network:
@@ -43,3 +91,9 @@ networks:
   order-service-network:
     external: true
     name: order-service-network
+  payment-service-network:
+    external: true
+    name: payment-service-network
+  kafka-network:
+      driver: bridge
+      name: kafka-network

@@ -24,4 +24,6 @@ public class SecurityPaths {
     public static final String USER_DOCS_PREFIX = "/user-service";
 
     public static final String ORDER_DOCS_PREFIX = "/order-service";
+
+    public static final String PAYMENT_DOCS_PREFIX = "/payment-service";
 }

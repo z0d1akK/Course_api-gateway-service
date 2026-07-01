@@ -57,8 +57,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
                 )
                 .flatMap(validation ->
                         chain.filter(exchange.mutate()
-                                .request(addHeaders(exchange.getRequest(), validation)
-                                )
+                                .request(addHeaders(exchange.getRequest(), validation))
                                 .build()
                         )
                 )
@@ -91,7 +90,8 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
                 || path.startsWith(SecurityPaths.API_DOCS)
                 || path.startsWith(SecurityPaths.AUTH_DOCS_PREFIX)
                 || path.startsWith(SecurityPaths.USER_DOCS_PREFIX)
-                || path.startsWith(SecurityPaths.ORDER_DOCS_PREFIX);
+                || path.startsWith(SecurityPaths.ORDER_DOCS_PREFIX)
+                || path.startsWith(SecurityPaths.PAYMENT_DOCS_PREFIX);
     }
 
     private boolean isInternalPath(String path) {
