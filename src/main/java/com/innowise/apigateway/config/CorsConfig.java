@@ -1,6 +1,7 @@
 package com.innowise.apigateway.config;
 
 import com.innowise.apigateway.common.constants.Headers;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,18 +13,15 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
+    @Value("${cors.allowed-origins}")
+    private String[] allowedOrigins;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration corsConfig = new CorsConfiguration();
 
-        corsConfig.setAllowedOrigins(List.of(
-                "http://localhost:8080",
-                "http://localhost:8081",
-                "http://localhost:8082",
-                "http://localhost:8083",
-                "http://localhost:8085"
-        ));
+        corsConfig.setAllowedOrigins(List.of(allowedOrigins));
 
         corsConfig.setAllowedMethods(List.of(
                 "GET",
