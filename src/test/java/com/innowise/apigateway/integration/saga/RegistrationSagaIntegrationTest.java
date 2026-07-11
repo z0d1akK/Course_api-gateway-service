@@ -54,7 +54,7 @@ class RegistrationSagaIntegrationTest extends AbstractIntegrationTest {
 
             var request = RegistrationFactory.createValidRequest();
 
-            webTestClient.post().uri("/api/register")
+            webTestClient.post().uri("/api/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
@@ -76,7 +76,7 @@ class RegistrationSagaIntegrationTest extends AbstractIntegrationTest {
         void shouldReturn400ForInvalidEmail() {
             var request = RegistrationFactory.createRequestWithInvalidEmail();
 
-            webTestClient.post().uri("/api/register")
+            webTestClient.post().uri("/api/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
@@ -90,7 +90,7 @@ class RegistrationSagaIntegrationTest extends AbstractIntegrationTest {
         void shouldReturn400ForEmptyName() {
             var request = RegistrationFactory.createRequestWithEmptyName();
 
-            webTestClient.post().uri("/api/register")
+            webTestClient.post().uri("/api/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
@@ -134,7 +134,7 @@ class RegistrationSagaIntegrationTest extends AbstractIntegrationTest {
 
             var request = RegistrationFactory.createValidRequest();
 
-            webTestClient.post().uri("/api/register")
+            webTestClient.post().uri("/api/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
@@ -158,7 +158,7 @@ class RegistrationSagaIntegrationTest extends AbstractIntegrationTest {
 
             var request = RegistrationFactory.createValidRequest();
 
-            webTestClient.post().uri("/api/register")
+            webTestClient.post().uri("/api/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()

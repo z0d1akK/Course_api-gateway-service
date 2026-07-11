@@ -13,6 +13,8 @@ public class Headers {
 
     public static final String INTERNAL_KEY = "X-Internal-Key";
 
+    public static final String GATEWAY_KEY = "X-Gateway-Key";
+
     public static final String FORWARDED_HOST = "X-Forwarded-Host";
     public static final String FORWARDED_PORT = "X-Forwarded-Port";
     public static final String FORWARDED_PROTO = "X-Forwarded-Proto";

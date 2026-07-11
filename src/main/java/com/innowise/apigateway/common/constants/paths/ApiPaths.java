@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ApiPaths {
 
-    public static final String REGISTER = "/api/register";
+    public static final String REGISTER = "/api/users/register";
 
     public static final String LOGIN = "/api/auth/token";
 
